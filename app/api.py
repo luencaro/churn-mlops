@@ -4,10 +4,9 @@ Telco Customer Churn — Proyecto MLOps
 """
 
 from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field
 from typing import Literal
 import joblib
-import numpy as np
 import pandas as pd
 import os
 

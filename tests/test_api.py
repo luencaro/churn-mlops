@@ -4,6 +4,7 @@ from app.api import app
 
 client = TestClient(app)
 
+
 # ─────────────────────────────────────────────
 # Fixture: payload válido de un cliente
 # ─────────────────────────────────────────────
