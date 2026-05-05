@@ -1,0 +1,19 @@
+# See docs at: https://mystmd.org/guide/frontmatter
+version: 1
+project:
+  id: ae5aa429-cf78-44e1-b3b0-66bdb10e91fe
+  title: Proyecto Churn MLOps
+  authors: 
+    - name: Luis Cabarcas
+    - name: Luis Cantillo
+    - name: Natalia Frias
+  github: https://github.com/luencaro/churn-mlops
+  toc:
+    - file: intro.md
+    - file: Notebooks/Notebook1_EDA.ipynb
+    - file: Notebooks/Notebook2_Models.ipynb
+    - file: Notebooks/Notebook3_LIME.ipynb
+site:
+  template: book-theme
+  options:
+    logo: logo.png

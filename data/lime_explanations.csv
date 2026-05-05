@@ -1,31 +1,31 @@
 Caso,Prob_Churn,Real,Prediccion,Feature,Contribucion,Direccion
 Caso 1 — Alto Riesgo,0.843,Churn,Churn,Contract=Month-to-month,0.2208,Pro-churn
-Caso 1 — Alto Riesgo,0.843,Churn,Churn,InternetService=Fiber optic,0.179,Pro-churn
-Caso 1 — Alto Riesgo,0.843,Churn,Churn,TechSupport=No,0.054,Pro-churn
-Caso 1 — Alto Riesgo,0.843,Churn,Churn,PaperlessBilling=Yes,0.0457,Pro-churn
-Caso 1 — Alto Riesgo,0.843,Churn,Churn,StreamingMovies=Yes,0.0438,Pro-churn
-Caso 1 — Alto Riesgo,0.843,Churn,Churn,PaymentMethod=Credit card (automatic),-0.0378,Anti-churn
-Caso 1 — Alto Riesgo,0.843,Churn,Churn,OnlineSecurity=No,0.0378,Pro-churn
-Caso 1 — Alto Riesgo,0.843,Churn,Churn,SeniorCitizen > 0.00,0.0364,Pro-churn
-Caso 1 — Alto Riesgo,0.843,Churn,Churn,MultipleLines=Yes,0.0291,Pro-churn
-Caso 1 — Alto Riesgo,0.843,Churn,Churn,Dependents=No,0.0281,Pro-churn
-Caso 2 — Bajo Riesgo,0.0745,No Churn,No Churn,Contract=Two year,-0.2302,Anti-churn
-Caso 2 — Bajo Riesgo,0.0745,No Churn,No Churn,InternetService=Fiber optic,0.1769,Pro-churn
-Caso 2 — Bajo Riesgo,0.0745,No Churn,No Churn,tenure > 55.00,-0.1458,Anti-churn
-Caso 2 — Bajo Riesgo,0.0745,No Churn,No Churn,TotalCharges > 3835.83,-0.0729,Anti-churn
-Caso 2 — Bajo Riesgo,0.0745,No Churn,No Churn,StreamingMovies=Yes,0.0438,Pro-churn
-Caso 2 — Bajo Riesgo,0.0745,No Churn,No Churn,PaperlessBilling=Yes,0.0429,Pro-churn
-Caso 2 — Bajo Riesgo,0.0745,No Churn,No Churn,SeniorCitizen <= 0.00,-0.0374,Anti-churn
-Caso 2 — Bajo Riesgo,0.0745,No Churn,No Churn,OnlineSecurity=Yes,-0.0371,Anti-churn
-Caso 2 — Bajo Riesgo,0.0745,No Churn,No Churn,StreamingTV=Yes,0.0336,Pro-churn
-Caso 2 — Bajo Riesgo,0.0745,No Churn,No Churn,MonthlyCharges > 90.00,0.0326,Pro-churn
-Caso 3 — Caso Ambiguo,0.5003,No Churn,Churn,Contract=Month-to-month,0.2273,Pro-churn
-Caso 3 — Caso Ambiguo,0.5003,No Churn,Churn,InternetService=Fiber optic,0.1847,Pro-churn
-Caso 3 — Caso Ambiguo,0.5003,No Churn,Churn,PaperlessBilling=Yes,0.0476,Pro-churn
-Caso 3 — Caso Ambiguo,0.5003,No Churn,Churn,29.00 < tenure <= 55.00,-0.0445,Anti-churn
-Caso 3 — Caso Ambiguo,0.5003,No Churn,Churn,OnlineSecurity=No,0.0397,Pro-churn
-Caso 3 — Caso Ambiguo,0.5003,No Churn,Churn,1394.92 < TotalCharges <= 3835.83,-0.0363,Anti-churn
-Caso 3 — Caso Ambiguo,0.5003,No Churn,Churn,MultipleLines=Yes,0.0362,Pro-churn
-Caso 3 — Caso Ambiguo,0.5003,No Churn,Churn,PaymentMethod=Credit card (automatic),-0.0293,Anti-churn
-Caso 3 — Caso Ambiguo,0.5003,No Churn,Churn,TechSupport=Yes,-0.0286,Anti-churn
-Caso 3 — Caso Ambiguo,0.5003,No Churn,Churn,SeniorCitizen <= 0.00,-0.0221,Anti-churn
+Caso 1 — Alto Riesgo,0.843,Churn,Churn,InternetService=Fiber optic,0.1908,Pro-churn
+Caso 1 — Alto Riesgo,0.843,Churn,Churn,PaperlessBilling=Yes,0.0476,Pro-churn
+Caso 1 — Alto Riesgo,0.843,Churn,Churn,TechSupport=No,0.0464,Pro-churn
+Caso 1 — Alto Riesgo,0.843,Churn,Churn,OnlineSecurity=No,0.044,Pro-churn
+Caso 1 — Alto Riesgo,0.843,Churn,Churn,StreamingMovies=Yes,0.0431,Pro-churn
+Caso 1 — Alto Riesgo,0.843,Churn,Churn,PaymentMethod=Credit card (automatic),-0.0306,Anti-churn
+Caso 1 — Alto Riesgo,0.843,Churn,Churn,9.00 < tenure <= 29.00,0.0291,Pro-churn
+Caso 1 — Alto Riesgo,0.843,Churn,Churn,SeniorCitizen > 0.00,0.0285,Pro-churn
+Caso 1 — Alto Riesgo,0.843,Churn,Churn,Dependents=No,0.0255,Pro-churn
+Caso 2 — Bajo Riesgo,0.0745,No Churn,No Churn,Contract=Two year,-0.2301,Anti-churn
+Caso 2 — Bajo Riesgo,0.0745,No Churn,No Churn,InternetService=Fiber optic,0.1782,Pro-churn
+Caso 2 — Bajo Riesgo,0.0745,No Churn,No Churn,tenure > 55.00,-0.1509,Anti-churn
+Caso 2 — Bajo Riesgo,0.0745,No Churn,No Churn,TotalCharges > 3835.83,-0.0779,Anti-churn
+Caso 2 — Bajo Riesgo,0.0745,No Churn,No Churn,OnlineSecurity=Yes,-0.0496,Anti-churn
+Caso 2 — Bajo Riesgo,0.0745,No Churn,No Churn,StreamingMovies=Yes,0.0441,Pro-churn
+Caso 2 — Bajo Riesgo,0.0745,No Churn,No Churn,PaymentMethod=Credit card (automatic),-0.0387,Anti-churn
+Caso 2 — Bajo Riesgo,0.0745,No Churn,No Churn,StreamingTV=Yes,0.037,Pro-churn
+Caso 2 — Bajo Riesgo,0.0745,No Churn,No Churn,MonthlyCharges > 90.00,0.0361,Pro-churn
+Caso 2 — Bajo Riesgo,0.0745,No Churn,No Churn,PaperlessBilling=Yes,0.0352,Pro-churn
+Caso 3 — Caso Ambiguo,0.5003,No Churn,Churn,Contract=Month-to-month,0.2195,Pro-churn
+Caso 3 — Caso Ambiguo,0.5003,No Churn,Churn,InternetService=Fiber optic,0.1784,Pro-churn
+Caso 3 — Caso Ambiguo,0.5003,No Churn,Churn,PaperlessBilling=Yes,0.0502,Pro-churn
+Caso 3 — Caso Ambiguo,0.5003,No Churn,Churn,OnlineSecurity=No,0.0434,Pro-churn
+Caso 3 — Caso Ambiguo,0.5003,No Churn,Churn,29.00 < tenure <= 55.00,-0.0428,Anti-churn
+Caso 3 — Caso Ambiguo,0.5003,No Churn,Churn,SeniorCitizen <= 0.00,-0.0426,Anti-churn
+Caso 3 — Caso Ambiguo,0.5003,No Churn,Churn,TechSupport=Yes,-0.0349,Anti-churn
+Caso 3 — Caso Ambiguo,0.5003,No Churn,Churn,1394.92 < TotalCharges <= 3835.83,-0.0286,Anti-churn
+Caso 3 — Caso Ambiguo,0.5003,No Churn,Churn,MultipleLines=Yes,0.0269,Pro-churn
+Caso 3 — Caso Ambiguo,0.5003,No Churn,Churn,PaymentMethod=Credit card (automatic),-0.0263,Anti-churn
