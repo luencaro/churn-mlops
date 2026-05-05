@@ -34,12 +34,12 @@ jobs:
 
       - name: Build the book
         run: |
-          jupyter-book build --site .
+          jupyter-book build --html .
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: _build/site/public/
+          path: _build/html/
 
   deploy:
     environment:
