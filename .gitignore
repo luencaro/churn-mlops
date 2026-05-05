@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Entornos Virtuales
+.env
+.venv/
+venv/
+env/
+ENV/
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+
+# Testing y Cobertura
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# Logs de CatBoost y otros frameworks
+catboost_info/
+logs/
+*.log
+
+# Opcional: Modelos pesados y Datos (Descomentar si superan los límites de GitHub)
+# *.joblib
+# *.pkl
+# *.h5
+# data/*.csv
+# data/*.joblib
+
+# Entornos IDE y OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

@@ -1,0 +1,153 @@
+name: CI/CD Pipeline — Telco Churn API
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  # ───────────────────────────────────────────
+  # JOB 1: Calidad de código y pruebas
+  # ───────────────────────────────────────────
+  test:
+    name: Lint + Unit Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Clonar el repositorio
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # 2. Configurar Python 3.10
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+          cache: "pip"           # cachea dependencias para acelerar el pipeline
+
+      # 3. Instalar dependencias del proyecto + herramientas de calidad
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install flake8 pytest pytest-cov httpx
+
+      # 4. Linting con flake8
+      #    E501: líneas largas (ignorado — aceptable en ML)
+      #    W503: operador al inicio de línea (estilo alternativo válido)
+      - name: Run Linter (flake8)
+        run: |
+          flake8 app/ tests/ \
+            --max-line-length=100 \
+            --ignore=E501,W503 \
+            --statistics \
+            --count
+
+      # 5. Crear un modelo dummy para que los tests no fallen por archivo faltante
+      - name: Create dummy model for tests
+        run: |
+          python - <<'EOF'
+          import joblib, os
+          from sklearn.pipeline import Pipeline
+          from sklearn.preprocessing import StandardScaler
+          from sklearn.ensemble import RandomForestClassifier
+          import pandas as pd
+          import numpy as np
+
+          os.makedirs("app", exist_ok=True)
+
+          # Pipeline mínimo que acepta el schema de CustomerData
+          from sklearn.compose import ColumnTransformer
+          from sklearn.impute import SimpleImputer
+          from sklearn.preprocessing import OneHotEncoder
+
+          num_cols = ["SeniorCitizen", "tenure", "MonthlyCharges", "TotalCharges"]
+          cat_cols = ["gender","Partner","Dependents","PhoneService","MultipleLines",
+                      "InternetService","OnlineSecurity","OnlineBackup","DeviceProtection",
+                      "TechSupport","StreamingTV","StreamingMovies","Contract",
+                      "PaperlessBilling","PaymentMethod"]
+
+          pre = ColumnTransformer([
+              ("num", Pipeline([("imp", SimpleImputer()), ("sc", StandardScaler())]), num_cols),
+              ("cat", Pipeline([("imp", SimpleImputer(strategy="most_frequent")),
+                                ("ohe", OneHotEncoder(handle_unknown="ignore", sparse_output=False))]), cat_cols)
+          ])
+
+          pipe = Pipeline([("preprocessor", pre), ("clf", RandomForestClassifier(n_estimators=5, random_state=42))])
+
+          # Datos mínimos de entrenamiento
+          X = pd.DataFrame([{
+              "SeniorCitizen":1,"tenure":5,"MonthlyCharges":99.9,"TotalCharges":499.5,
+              "gender":"Male","Partner":"No","Dependents":"No","PhoneService":"Yes",
+              "MultipleLines":"No","InternetService":"Fiber optic","OnlineSecurity":"No",
+              "OnlineBackup":"No","DeviceProtection":"No","TechSupport":"No",
+              "StreamingTV":"Yes","StreamingMovies":"Yes","Contract":"Month-to-month",
+              "PaperlessBilling":"Yes","PaymentMethod":"Electronic check"
+          }] * 20)
+          y = [1,0]*10
+          pipe.fit(X, y)
+          joblib.dump(pipe, "app/model.joblib")
+          print("Modelo dummy creado en app/model.joblib")
+          EOF
+
+      # 6. Pruebas unitarias con pytest y reporte de cobertura
+      - name: Run Tests (pytest)
+        run: |
+          pytest tests/ \
+            --verbose \
+            --tb=short \
+            --cov=app \
+            --cov-report=term-missing \
+            --cov-fail-under=70
+
+      # 7. Subir reporte de cobertura (opcional — requiere cuenta en Codecov)
+      # - name: Upload coverage to Codecov
+      #   uses: codecov/codecov-action@v3
+
+  # ───────────────────────────────────────────
+  # JOB 2: Build y push de imagen Docker
+  # Solo se ejecuta en push directo a main (no en PRs)
+  # ───────────────────────────────────────────
+  docker:
+    name: Build & Push Docker Image
+    runs-on: ubuntu-latest
+    needs: test                        # Solo corre si el job test pasó
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Configurar credenciales Docker Hub
+      # Requiere secrets: DOCKERHUB_USERNAME y DOCKERHUB_TOKEN
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # Buildx permite builds multi-plataforma (linux/amd64 + linux/arm64)
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      # Construir y publicar la imagen con dos tags:
+      #   :latest      → siempre apunta a la última versión
+      #   :sha-<hash>  → permite rastrear exactamente qué commit generó cada imagen
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          platforms: linux/amd64,linux/arm64
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/telco-churn-api:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/telco-churn-api:sha-${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Image build summary
+        run: |
+          echo "✅ Imagen publicada:"
+          echo "   ${{ secrets.DOCKERHUB_USERNAME }}/telco-churn-api:latest"
+          echo "   ${{ secrets.DOCKERHUB_USERNAME }}/telco-churn-api:sha-${{ github.sha }}"
