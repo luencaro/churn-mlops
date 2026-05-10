@@ -27,3 +27,6 @@ seaborn>=0.12.0
 # Testing
 pytest>=7.4.0
 httpx>=0.24.0       # cliente HTTP para tests de FastAPI
+
+# Monitoreo
+evidently>=0.4.0
